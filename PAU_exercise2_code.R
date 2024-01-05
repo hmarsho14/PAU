@@ -95,7 +95,7 @@ write.csv(refined_race_district, "~/Documents/GitHub/PAU/refined_race_district.c
 
 refined_frisked_12 <- refined %>% filter(districtoccur == 12) %>% group_by(race) %>% summarise(frisk_rate = round(sum(vehicle_frisked) / n() * 100, 2)) # create table
 
-write.csv(refined_frisked_12, "~/Documents/GitHub/PAU/refined_frisked_12.csv", row.names = TRUE) # export table
+write.csv(refined_frisked_12, "~/Documents/GitHub/PAU/refined_frisked_12.csv", row.names = FALSE) # export table
 
 #=========================================================================
 # Question 8
@@ -105,8 +105,8 @@ write.csv(refined_frisked_12, "~/Documents/GitHub/PAU/refined_frisked_12.csv", r
 # What might account for such differences, and how would you go about testing your hypotheses?
 
 refined_frisked_24 <- refined %>% filter(districtoccur == 24) %>% group_by(race) %>% summarise(frisk_rate = round(sum(vehicle_frisked) / n() * 100, 2)) # create table
-write.csv(refined_frisked_24, "~/Documents/GitHub/PAU/refined_frisked_24.csv", row.names = TRUE) # export table
 refined_frisked_district <- merge(refined_frisked_12, refined_frisked_24, by = 'race') %>% setNames(c('race', '12', '24')) # compare racial frisk rates across Districts 12 & 24
+write.csv(refined_frisked_district, "~/Documents/GitHub/PAU/refined_frisked_district.csv", row.names = FALSE) # export table
 
 refined <- refined %>% mutate(month = floor_date(datetimeoccur, "month")) 
 district_month <- table(refined$districtoccur, refined$month)
@@ -118,7 +118,7 @@ write.csv(district_weekday, "~/Documents/GitHub/PAU/district_weekday.csv", row.n
 print(chisq.test(district_weekday)) # p-value < 2.2e-16
 
 district_gender <- table(refined$districtoccur, refined$gender)
-write.csv(district_gender, "~/Documents/GitHub/PAU/district_gender.csv", row.names = TRUE) # export table
+write.csv(district_gender, "~/Documents/GitHub/PAU/district_gender.csv", row.names = FALSE) # export table
 print(chisq.test(district_gender)) # p-value = 0.1665
 
 district_race <- table(refined$districtoccur, refined$race)
